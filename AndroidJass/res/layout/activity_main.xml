@@ -3,13 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/helloWorld"
+    <fragment
+        android:id="@+id/tableFragment"
+        android:name="com.zuehlke.jhp.bucamp.android.jass.TableFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world"
-        tools:context=".MainActivity" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/table_fragment" />
+
+    <fragment
+        android:id="@+id/handFragment"
+        android:name="com.zuehlke.jhp.bucamp.android.jass.HandFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="86dp"
+        tools:layout="@layout/hand_fragment" />
 
 </RelativeLayout>
