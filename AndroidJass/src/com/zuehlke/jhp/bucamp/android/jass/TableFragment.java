@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import ch.mbaumeler.jass.core.Game;
+import ch.mbaumeler.jass.core.Match;
+import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ui.JassModelObserver;
@@ -22,7 +24,6 @@ public class TableFragment extends Fragment implements JassModelObserver {
 	private Game game;
 	private MainActivity mainActivity;
 	private Map<PlayerToken, TextView> map;
-	private CardUtil cardUtil = new CardUtil();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +39,7 @@ public class TableFragment extends Fragment implements JassModelObserver {
 		game = mainActivity.getGame();
 
 		List<PlayerToken> all = game.getPlayerRepository().getAll();
+
 		map = new HashMap<PlayerToken, TextView>();
 		map.put(all.get(0), (TextView) mainActivity.findViewById(R.id.player1));
 		map.put(all.get(1), (TextView) mainActivity.findViewById(R.id.player2));
@@ -56,8 +58,13 @@ public class TableFragment extends Fragment implements JassModelObserver {
 	}
 
 	public void updated(Event arg0, PlayerToken arg1, Object arg2) {
-		List<PlayedCard> cardsOnTable = game.getCurrentMatch()
-				.getCardsOnTable();
+		Match currentMatch = game.getCurrentMatch();
+		Ansage ansage = currentMatch.getAnsage();
+		if (ansage != null) {
+			((TextView) mainActivity.findViewById(R.id.trumpf))
+					.setText(CardUtil.getResourceFor(ansage));
+		}
+		List<PlayedCard> cardsOnTable = currentMatch.getCardsOnTable();
 
 		getTextView(R.id.player1).setText("");
 		getTextView(R.id.player2).setText("");
@@ -66,8 +73,9 @@ public class TableFragment extends Fragment implements JassModelObserver {
 
 		for (PlayedCard playedCard : cardsOnTable) {
 			TextView textView = map.get(playedCard.getPlayer());
-			textView.setText(cardUtil.toCardString(playedCard.getCard()));
-			textView.setTextColor(cardUtil
+			textView.setText(CardUtil.toCardString(playedCard.getCard()));
+			textView.setText(CardUtil.toCardString(playedCard.getCard()));
+			textView.setTextColor(CardUtil
 					.color(playedCard.getCard().getSuit()));
 		}
 	}

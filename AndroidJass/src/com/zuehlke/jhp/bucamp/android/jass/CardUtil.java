@@ -6,15 +6,40 @@ import android.graphics.Color;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
+import ch.mbaumeler.jass.core.game.Ansage;
 
-public class CardUtil {
+public final class CardUtil {
 
-	public int color(CardSuit cardSuit) {
+	public static int color(CardSuit cardSuit) {
 		return cardSuit == HEARTS || cardSuit == DIAMONDS ? Color.RED
 				: Color.BLACK;
 	}
 
-	private char getSuitChar(CardSuit cardSuit) {
+	public static int getResourceFor(Ansage ansage) {
+		if (ansage.isTrumpf(CardSuit.HEARTS)) {
+			return R.string.heartsSymbol;
+		} else if (ansage.isTrumpf(CardSuit.DIAMONDS)) {
+			return R.string.dimondsSymbol;
+		} else if (ansage.isTrumpf(CardSuit.CLUBS)) {
+			return R.string.clubsSymbol;
+		} else {
+			return R.string.spadesSymbol;
+		}
+	}
+
+	public static char getAnsageIcon(Ansage ansage) {
+		if (ansage.isTrumpf(CardSuit.HEARTS)) {
+			return CardUtil.getSuitChar(CardSuit.HEARTS);
+		} else if (ansage.isTrumpf(CardSuit.DIAMONDS)) {
+			return CardUtil.getSuitChar(CardSuit.DIAMONDS);
+		} else if (ansage.isTrumpf(CardSuit.CLUBS)) {
+			return CardUtil.getSuitChar(CardSuit.CLUBS);
+		} else {
+			return CardUtil.getSuitChar(CardSuit.SPADES);
+		}
+	}
+
+	public static char getSuitChar(CardSuit cardSuit) {
 
 		switch (cardSuit) {
 		case CLUBS:
@@ -30,7 +55,7 @@ public class CardUtil {
 
 	}
 
-	private String toString(CardValue value) {
+	private static String toString(CardValue value) {
 		switch (value) {
 
 		case SIX:
@@ -55,9 +80,8 @@ public class CardUtil {
 			return null;
 		}
 	}
-	
-	public String toCardString(Card card) {
-		return getSuitChar(card.getSuit()) + "\n"
-				+ toString(card.getValue());
+
+	public static String toCardString(Card card) {
+		return getSuitChar(card.getSuit()) + "\n" + toString(card.getValue());
 	}
 }

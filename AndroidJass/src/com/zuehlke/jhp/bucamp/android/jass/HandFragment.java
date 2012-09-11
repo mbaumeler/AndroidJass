@@ -59,8 +59,8 @@ public class HandFragment extends Fragment implements JassModelObserver {
 			final Card card = cardsInHand.get(i);
 
 			Button button = getButtonByIndex(i);
-			button.setText(cardUtil.toCardString(card));
-			button.setTextColor(cardUtil.color(card.getSuit()));
+			button.setText(CardUtil.toCardString(card));
+			button.setTextColor(CardUtil.color(card.getSuit()));
 			button.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
 					game.getCurrentMatch().playCard(card);

@@ -19,20 +19,17 @@ public class MainActivity extends Activity {
 
 	private ObservableGame game;
 	private SimpleStrategy strategy;
-	
-	
+
 	private Map<PlayerToken, String> names = new HashMap<PlayerToken, String>();
-	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		game = new ObservableGame(new JassEngine().createJassGame());
-		
-		
+
 		names = new HashMap<PlayerToken, String>();
-		
+
 		List<PlayerToken> all = game.getPlayerRepository().getAll();
 		names.put(all.get(0), "DU");
 		names.put(all.get(1), "Kirk");
@@ -42,7 +39,13 @@ public class MainActivity extends Activity {
 		
 		game.addObserver(new AnsageObserver(game, getHumanPlayerToken(), this));
 	}
-	
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		game.notifyObservers();
+	}
+
 	public String getName(PlayerToken token) {
 		return names.get(token);
 	}
@@ -50,13 +53,12 @@ public class MainActivity extends Activity {
 	public ObservableGame getGame() {
 		return game;
 	}
-	
+
 	public PlayerToken getHumanPlayerToken() {
 		return game.getPlayerRepository().getAll().get(0);
 	}
 
 	public void refreshClicked(View view) {
-		game.notifyObservers();
 		Match match = game.getCurrentMatch();
 		if (match.getActivePlayer() != getHumanPlayerToken()) {
 			if (match.getAnsage() == null) {
@@ -65,7 +67,7 @@ public class MainActivity extends Activity {
 			game.getCurrentMatch().playCard(strategy.getCardToPlay(match));
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
