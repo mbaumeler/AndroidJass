@@ -6,13 +6,13 @@ import android.os.Parcelable;
 public class Player implements Parcelable {
 	
 	private String name;
-	private boolean isHuman;
+	private boolean isAi;
 	private String strategy;
 	
-	public Player(String name, boolean isHuman, String strategy) {
+	public Player(String name, boolean isAi, String strategy) {
 		super();
 		this.name = name;
-		this.isHuman = isHuman;
+		this.isAi = isAi;
 		this.strategy = strategy;
 	}
 	
@@ -22,11 +22,11 @@ public class Player implements Parcelable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public boolean isHuman() {
-		return isHuman;
+	public boolean isAi() {
+		return isAi;
 	}
-	public void setHuman(boolean isHuman) {
-		this.isHuman = isHuman;
+	public void setAi(boolean isAi) {
+		this.isAi = isAi;
 	}
 	public String getStrategy() {
 		return strategy;
@@ -37,7 +37,7 @@ public class Player implements Parcelable {
 
 	public Player(Parcel p) {
 		name = p.readString();
-		isHuman = Boolean.valueOf(p.readString());
+		isAi = Boolean.valueOf(p.readString());
 		strategy = p.readString();
 	}
 	
@@ -47,7 +47,7 @@ public class Player implements Parcelable {
 
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(name);
-		dest.writeString(Boolean.toString(isHuman));
+		dest.writeString(Boolean.toString(isAi));
 		dest.writeString(strategy);
 	}
 	

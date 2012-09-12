@@ -6,12 +6,14 @@ import android.os.Parcelable;
 public class JassSettings implements Parcelable {
 
 	private long targetPoints;
+	private long playDelay;
 	private Team team1;
 	private Team team2;
 
-	public JassSettings(long targetPoints, Team team1, Team team2) {
+	public JassSettings(long targetPoints, long playDelay, Team team1, Team team2) {
 		super();
 		this.targetPoints = targetPoints;
+		this.playDelay = playDelay;
 		this.team1 = team1;
 		this.team2 = team2;
 	}
@@ -22,6 +24,14 @@ public class JassSettings implements Parcelable {
 
 	public void setTargetPoints(long targetPoints) {
 		this.targetPoints = targetPoints;
+	}
+
+	public long getPlayDelay() {
+		return playDelay;
+	}
+
+	public void setPlayDelay(long playDelay) {
+		this.playDelay = playDelay;
 	}
 
 	public Team getTeam1() {
@@ -42,6 +52,7 @@ public class JassSettings implements Parcelable {
 
 	public JassSettings(Parcel p) {
 		targetPoints = p.readLong();
+		playDelay = p.readLong();
 		team1 = new Team(p);
 		team2 = new Team(p);
 	}
@@ -52,6 +63,7 @@ public class JassSettings implements Parcelable {
 
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeLong(targetPoints);
+		dest.writeLong(playDelay);
 		team1.writeToParcel(dest, flags);
 		team2.writeToParcel(dest, flags);
 	}
