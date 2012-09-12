@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -45,4 +46,53 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
         
 
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/score_title"
+            android:ems="3"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/score_you_title"
+            android:ems="3"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textViewScoreYou"
+            android:layout_width="20pt"
+            android:layout_height="wrap_content"
+            android:text="@string/score_points_initial"
+            android:ems="3"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/score_rival_title"
+            android:ems="3"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+         <TextView
+            android:id="@+id/textViewScoreRival"
+            android:layout_width="20pt"
+            android:layout_height="wrap_content"
+            android:text="@string/score_points_initial"
+            android:ems="3"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+
+>>>>>>> branch 'master' of https://github.com/fabiropr/AndroidJass.git
 </LinearLayout>

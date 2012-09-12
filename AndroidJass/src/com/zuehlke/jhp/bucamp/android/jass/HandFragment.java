@@ -6,13 +6,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
@@ -21,7 +17,6 @@ import ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event;
 
 public class HandFragment extends Fragment implements JassModelObserver {
 
-	private Game game;
 	private MainActivity mainActivity;
 
 	@Override
@@ -34,7 +29,6 @@ public class HandFragment extends Fragment implements JassModelObserver {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		mainActivity.getGame().addObserver(this);
-		game = mainActivity.getGame();
 	}
 
 	private Button findViewById(int id) {
@@ -55,13 +49,13 @@ public class HandFragment extends Fragment implements JassModelObserver {
 	}
 
 	public void updated(Event event, PlayerToken playerToken, Object object) {
-		
-		
-		int roundsCompleted = game.getCurrentMatch().getRoundsCompleted();
-		int cardsOnTable = game.getCurrentMatch().getCardsOnTable().size();
+
+		Match currentMatch = mainActivity.getGame().getCurrentMatch();
+		int roundsCompleted = currentMatch.getRoundsCompleted();
+		int cardsOnTable = currentMatch.getCardsOnTable().size();
 		if (roundsCompleted == 0 && cardsOnTable == 0) {
-			List<Card> cardsInHand = game.getCurrentMatch().getCards(
-					mainActivity.getGameController().getHumanPlayerToken());
+			List<Card> cardsInHand = currentMatch.getCards(mainActivity
+					.getGameController().getHumanPlayerToken());
 
 			initCard(R.id.button0, cardsInHand.get(0));
 			initCard(R.id.button1, cardsInHand.get(1));

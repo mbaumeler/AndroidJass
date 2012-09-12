@@ -14,24 +14,23 @@ import ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event;
 public class GameController implements JassModelObserver {
 
 	private Timer timer = new Timer();
-	final Handler handler = new Handler();
+	private final Handler handler = new Handler();
 	private ObservableGame game;
 	private SimpleStrategy strategy;
 
 	public GameController(ObservableGame game) {
 		this.game = game;
-		strategy = new SimpleStrategyEngine().create();
-		this.game.addObserver(this);
+		this.strategy = new SimpleStrategyEngine().create();
 	}
 
 	public PlayerToken getHumanPlayerToken() {
-		return game.getPlayerRepository().getAll().get(0);
+		return this.game.getPlayerRepository().getAll().get(0);
 	}
 
 	public void updated(Event arg0, PlayerToken arg1, Object arg2) {
-		if (!game.getCurrentMatch().getActivePlayer()
+		if (!this.game.getCurrentMatch().getActivePlayer()
 				.equals(getHumanPlayerToken())) {
-			timer.schedule(new TimerTask() {
+			this.timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
 					handler.post(new Runnable() {
@@ -47,8 +46,8 @@ public class GameController implements JassModelObserver {
 	}
 
 	public void playCard() {
-		game.getCurrentMatch().playCard(
-				strategy.getCardToPlay(game.getCurrentMatch()));
+		this.game.getCurrentMatch().playCard(
+				this.strategy.getCardToPlay(this.game.getCurrentMatch()));
 	}
 
 }
