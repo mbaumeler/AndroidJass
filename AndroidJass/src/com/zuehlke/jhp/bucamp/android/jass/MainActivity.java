@@ -31,11 +31,12 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-		JassSettings settings = SettingsCreator.createFromPreferences(sharedPrefs);
-		
-<<<<<<< HEAD
+
+		SharedPreferences sharedPrefs = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		JassSettings settings = SettingsCreator
+				.createFromPreferences(sharedPrefs);
+
 		if (savedInstanceState == null || game == null) {
 			game = new JassEngine().createJassGame();
 			observableGame = new ObservableGame(game);
@@ -44,17 +45,9 @@ public class MainActivity extends Activity {
 		}
 		gameController = new GameController(observableGame);
 		observableGame.addObserver(gameController);
-=======
-		game = new ObservableGame(new JassEngine().createJassGame());
-		gameController = new GameController(game);
->>>>>>> branch 'master' of https://github.com/fabiropr/AndroidJass.git
 		names = new HashMap<PlayerToken, Player>();
 
-<<<<<<< HEAD
 		List<PlayerToken> all = observableGame.getPlayerRepository().getAll();
-=======
-		List<PlayerToken> all = game.getPlayerRepository().getAll();
->>>>>>> branch 'master' of https://github.com/fabiropr/AndroidJass.git
 		names.put(all.get(0), settings.getTeam1().getPlayer1());
 		names.put(all.get(1), settings.getTeam2().getPlayer1());
 		names.put(all.get(2), settings.getTeam1().getPlayer2());
