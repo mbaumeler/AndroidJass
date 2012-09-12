@@ -47,7 +47,7 @@ public class HandFragment extends Fragment implements JassModelObserver {
 		Match currentMatch = game.getCurrentMatch();
 
 		List<Card> cardsInHand = currentMatch.getCards(mainActivity
-				.getHumanPlayerToken());
+				.getGameController().getHumanPlayerToken());
 
 		int i = 0;
 		for (i = 0; i < cardsInHand.size(); i++) {

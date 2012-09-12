@@ -9,14 +9,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import ch.mbaumeler.jass.core.JassEngine;
 import ch.mbaumeler.jass.core.game.PlayerToken;
-import ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy;
-import ch.mbaumeler.jass.extended.ai.simple.SimpleStrategyEngine;
 import ch.mbaumeler.jass.extended.ui.ObservableGame;
+
+import com.zuehlke.jhp.bucamp.android.jass.controller.GameController;
 
 public class MainActivity extends Activity {
 
 	private ObservableGame game;
-	private SimpleStrategy strategy;
+	private GameController gameController;
 
 	private Map<PlayerToken, String> names = new HashMap<PlayerToken, String>();
 
@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		game = new ObservableGame(new JassEngine().createJassGame());
-
+		gameController = new GameController(game);
 		names = new HashMap<PlayerToken, String>();
 
 		List<PlayerToken> all = game.getPlayerRepository().getAll();
@@ -33,9 +33,9 @@ public class MainActivity extends Activity {
 		names.put(all.get(1), "Kirk");
 		names.put(all.get(2), "Spock");
 		names.put(all.get(3), "Doctor Leonard McCoy");
-		strategy = new SimpleStrategyEngine().create();
 
-		game.addObserver(new AnsageObserver(game, getHumanPlayerToken(), this));
+		game.addObserver(new AnsageObserver(game, gameController
+				.getHumanPlayerToken(), this));
 	}
 
 	@Override
@@ -52,18 +52,13 @@ public class MainActivity extends Activity {
 		return game;
 	}
 
-	public PlayerToken getHumanPlayerToken() {
-		return game.getPlayerRepository().getAll().get(0);
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 
-	public void playCard() {
-		game.getCurrentMatch().playCard(
-				strategy.getCardToPlay(game.getCurrentMatch()));
+	public GameController getGameController() {
+		return gameController;
 	}
 }

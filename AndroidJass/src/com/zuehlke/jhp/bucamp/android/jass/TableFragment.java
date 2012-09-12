@@ -3,13 +3,10 @@ package com.zuehlke.jhp.bucamp.android.jass;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +24,6 @@ public class TableFragment extends Fragment implements JassModelObserver {
 	private Game game;
 	private MainActivity mainActivity;
 	private Map<PlayerToken, TextView> map;
-	private Timer timer = new Timer();
-	final Handler handler = new Handler();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,20 +77,6 @@ public class TableFragment extends Fragment implements JassModelObserver {
 			textView.setText(CardUtil.toCardString(playedCard.getCard()));
 			textView.setTextColor(CardUtil
 					.color(playedCard.getCard().getSuit()));
-		}
-		if (!currentMatch.getActivePlayer().equals(
-				mainActivity.getHumanPlayerToken())) {
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					handler.post(new Runnable() {
-						public void run() {
-							mainActivity.playCard();
-						}
-					});
-
-				}
-			}, 2000);
 		}
 	}
 
