@@ -7,9 +7,7 @@ import java.util.Map;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import ch.mbaumeler.jass.core.JassEngine;
-import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy;
 import ch.mbaumeler.jass.extended.ai.simple.SimpleStrategyEngine;
@@ -36,7 +34,7 @@ public class MainActivity extends Activity {
 		names.put(all.get(2), "Spock");
 		names.put(all.get(3), "Doctor Leonard McCoy");
 		strategy = new SimpleStrategyEngine().create();
-		
+
 		game.addObserver(new AnsageObserver(game, getHumanPlayerToken(), this));
 	}
 
@@ -58,19 +56,14 @@ public class MainActivity extends Activity {
 		return game.getPlayerRepository().getAll().get(0);
 	}
 
-	public void refreshClicked(View view) {
-		Match match = game.getCurrentMatch();
-		if (match.getActivePlayer() != getHumanPlayerToken()) {
-			if (match.getAnsage() == null) {
-				match.setAnsage(strategy.getAnsage(match));
-			}
-			game.getCurrentMatch().playCard(strategy.getCardToPlay(match));
-		}
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
+	}
+
+	public void playCard() {
+		game.getCurrentMatch().playCard(
+				strategy.getCardToPlay(game.getCurrentMatch()));
 	}
 }

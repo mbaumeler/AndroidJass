@@ -1,7 +1,5 @@
 package com.zuehlke.jhp.bucamp.android.jass;
 
-import static ch.mbaumeler.jass.core.card.CardSuit.HEARTS;
-
 import java.util.List;
 
 import android.app.Activity;
@@ -15,7 +13,6 @@ import android.widget.Button;
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
-import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ui.JassModelObserver;
 import ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event;
@@ -24,9 +21,7 @@ public class HandFragment extends Fragment implements JassModelObserver {
 
 	private Game game;
 	private MainActivity mainActivity;
-	private CardUtil cardUtil = new CardUtil();
-	
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -50,7 +45,7 @@ public class HandFragment extends Fragment implements JassModelObserver {
 	public void updated(Event event, PlayerToken playerToken, Object object) {
 
 		Match currentMatch = game.getCurrentMatch();
-		
+
 		List<Card> cardsInHand = currentMatch.getCards(mainActivity
 				.getHumanPlayerToken());
 
@@ -68,12 +63,11 @@ public class HandFragment extends Fragment implements JassModelObserver {
 			});
 			button.setEnabled(currentMatch.isCardPlayable(card));
 		}
-		while(i < 9) {
+		while (i < 9) {
 			getButtonByIndex(i++).setVisibility(View.INVISIBLE);
 		}
 	}
-	
-	
+
 	private Button getButtonByIndex(int index) {
 		switch (index) {
 		case 0:
@@ -98,8 +92,6 @@ public class HandFragment extends Fragment implements JassModelObserver {
 		}
 		return null;
 	}
-
-
 
 	private Button button(int id) {
 		return (Button) mainActivity.findViewById(id);
