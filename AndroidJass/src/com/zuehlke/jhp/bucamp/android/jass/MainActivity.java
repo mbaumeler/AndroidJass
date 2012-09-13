@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.JassEngine;
 import ch.mbaumeler.jass.core.game.PlayerToken;
@@ -117,6 +118,11 @@ public class MainActivity extends Activity {
 
 	public void doNegativeClick() {
 		startActivity(new Intent(this, SetupActivity.class));
+	}
+	
+	public void refresh(View view) {
+		observableGame.notifyObservers();
+		gameController.playCard();
 	}
 
 }

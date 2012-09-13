@@ -14,9 +14,11 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.mbaumeler.jass.core.Game;
@@ -50,6 +52,8 @@ public class TableFragment extends Fragment implements JassModelObserver,
 		super.onActivityCreated(savedInstanceState);
 		mainActivity.getGame().addObserver(this);
 		game = mainActivity.getGame();
+		
+		
 
 		List<PlayerToken> all = game.getPlayerRepository().getAll();
 
@@ -64,7 +68,7 @@ public class TableFragment extends Fragment implements JassModelObserver,
 		setPlayerName(R.id.player3Name, all.get(2));
 		setPlayerName(R.id.player4Name, all.get(3));
 
-		mainActivity.findViewById(R.id.tableFragment).setOnDragListener(this);
+		mainActivity.findViewById(R.id.player1).setOnDragListener(this);
 	}
 
 	private void setPlayerName(int id, PlayerToken token) {

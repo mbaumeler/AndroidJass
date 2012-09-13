@@ -12,6 +12,16 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="@string/score_you_title"
-        android:textColor="@color/black" />
+        android:textColor="@color/black" 
+        />
+
+    <Button
+        android:id="@+id/refresh"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Refresh" />
 
 </RelativeLayout>
