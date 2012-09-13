@@ -1,113 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tableLayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/shape" >
 
     <TableRow
-        android:id="@+id/tableRow1"
         android:layout_width="match_parent"
-        android:layout_gravity="center_horizontal" >
-
-        <TextView android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
 
         <TextView
-            android:id="@+id/player3"
-            android:layout_weight="1"
-            android:gravity="center" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-        <TextView android:layout_weight="1" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/player3Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:text="player3"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/player3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/player3Name"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/empty" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
     </TableRow>
 
     <TableRow
-        android:id="@+id/tableRow2"
         android:layout_width="match_parent"
-        android:layout_gravity="center_horizontal" >
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
 
-        <TextView android:layout_weight="1" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
 
-        <TextView
-            android:id="@+id/player3Name"
-            android:layout_weight="1"
-            android:gravity="center" />
+            <TextView
+                android:id="@+id/player4Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:text="player4" 
+                android:gravity="center"/>
 
-        <TextView android:layout_weight="1" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow3"
-        android:layout_width="match_parent"
-        android:layout_gravity="center_horizontal" >
-
-        <TextView
-            android:id="@+id/player4"
-            android:layout_weight="1"
-            android:gravity="center" />
+            <ImageView
+                android:id="@+id/player4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/player4Name"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/empty" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/trumpf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-       		android:text="a"
-            android:gravity="center" 
-            android:textAppearance="?android:attr/textAppearanceLarge" 
-            android:background="@drawable/trumpf"
-            />
+            android:gravity="center|center_horizontal"
+            android:text="trumpf" />
 
-        <TextView
-            android:id="@+id/player2"
-            android:layout_weight="1"
-            android:gravity="center" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/player2Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:text="Player2"
+                android:gravity="center" />
+
+            <ImageView
+                android:id="@+id/player2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/player2Name"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/empty" />
+        </RelativeLayout>
     </TableRow>
 
     <TableRow
-        android:id="@+id/tableRow4"
         android:layout_width="match_parent"
-        android:layout_gravity="center_horizontal" >
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
 
         <TextView
-            android:id="@+id/player4Name"
-            android:layout_weight="1"
-            android:gravity="center" />
-
-        <TextView android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/player2Name"
-            android:layout_weight="1"
-            android:gravity="center" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow5"
-        android:layout_gravity="center_horizontal" >
-
-        <TextView
-            android:id="@+id/empty41"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/player1Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:text="Player1" 
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/player1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/player1Name"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/empty" />
+        </RelativeLayout>
+
         <TextView
-            android:id="@+id/player1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center" />
-
-        <TextView
-            android:id="@+id/empty42"
-            android:layout_weight="1" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow6"
-        android:layout_gravity="center_horizontal" >
-
-        <TextView android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/player1Name"
-            android:layout_weight="1"
-            android:gravity="center" />
-
-        <TextView android:layout_weight="1" />
+             />
     </TableRow>
 
 </TableLayout>

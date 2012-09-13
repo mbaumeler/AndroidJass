@@ -56,7 +56,7 @@ public class JassSettings implements Parcelable {
 		team1 = new Team(p);
 		team2 = new Team(p);
 	}
-	
+
 	public int describeContents() {
 		return 0;
 	}
@@ -67,16 +67,15 @@ public class JassSettings implements Parcelable {
 		team1.writeToParcel(dest, flags);
 		team2.writeToParcel(dest, flags);
 	}
-	
-    public static final Parcelable.Creator<JassSettings> CREATOR =
-        	new Parcelable.Creator<JassSettings>() {
-                public JassSettings createFromParcel(Parcel in) {
-                    return new JassSettings(in);
-                }
-     
-                public JassSettings[] newArray(int size) {
-                    return new JassSettings[size];
-                }
-            };		
+
+	public static final Parcelable.Creator<JassSettings> CREATOR = new Parcelable.Creator<JassSettings>() {
+		public JassSettings createFromParcel(Parcel in) {
+			return new JassSettings(in);
+		}
+
+		public JassSettings[] newArray(int size) {
+			return new JassSettings[size];
+		}
+	};
 
 }

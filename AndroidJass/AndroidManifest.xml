@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".SetupActivity"
+            android:icon="@drawable/game_icon"
             android:label="@string/setup_activity_title" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +23,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:icon="@drawable/game_icon"
             android:label="@string/main_activity_title" />
-        </application>
+    </application>
 
 </manifest>

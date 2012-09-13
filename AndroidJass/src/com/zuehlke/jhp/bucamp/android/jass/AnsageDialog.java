@@ -45,6 +45,7 @@ public class AnsageDialog extends DialogFragment {
 	private void addListener(int id, View view, final Ansage ansage) {
 		getButton(id, view).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				
 				ansage(ansage);
 			}
 		});

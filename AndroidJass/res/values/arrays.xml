@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
 
     <string-array name="preference_ai_strategies">
         <item name="ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy">Matthias Brain</item>
         <item name="ch.mbaumeler.jass.extended.ai.dummy.DummyStrategy">Dummies</item>
     </string-array>
-     <string-array name="preference_ai_strategy_values">
+    <string-array name="preference_ai_strategy_values">
         <item name="ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy">ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy</item>
         <item name="ch.mbaumeler.jass.extended.ai.dummy.DummyStrategy">ch.mbaumeler.jass.extended.ai.dummy.DummyStrategy</item>
-    </string-array>   
+    </string-array>
+
 </resources>

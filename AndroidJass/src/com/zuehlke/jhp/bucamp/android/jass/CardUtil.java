@@ -7,6 +7,7 @@ import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
 import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.core.game.Ansage.SpielModi;
 
 public final class CardUtil {
 
@@ -22,9 +23,14 @@ public final class CardUtil {
 			return R.string.dimondsSymbol;
 		} else if (ansage.isTrumpf(CardSuit.CLUBS)) {
 			return R.string.clubsSymbol;
-		} else { 
+		} else if( ansage.isTrumpf(CardSuit.SPADES)) { 
 			return R.string.spadesSymbol;
+		} else if(ansage.getSpielModi() == SpielModi.OBENABE) {
+			return R.string.obenabe;
+		} else if (ansage.getSpielModi() == SpielModi.OBENABE) {
+			return R.string.undeuffe;
 		}
+		throw new IllegalArgumentException("Unknown ansage");
 	}
 
 	public static char getAnsageIcon(Ansage ansage) {
