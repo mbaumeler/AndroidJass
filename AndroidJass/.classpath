@@ -6,6 +6,7 @@
 	<classpathentry kind="lib" path="libs/guice-3.0-no_aop.jar"/>
 	<classpathentry kind="lib" path="libs/jassEngine.jar"/>
 	<classpathentry kind="lib" path="libs/javax.inject-1.jar"/>
+	<classpathentry kind="lib" path="libs/NextGenJassAI-0.1.0-SNAPSHOT-standalone (1).jar"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
