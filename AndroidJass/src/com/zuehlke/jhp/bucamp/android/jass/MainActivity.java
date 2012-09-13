@@ -1,5 +1,7 @@
 package com.zuehlke.jhp.bucamp.android.jass;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.JassEngine;
 import ch.mbaumeler.jass.core.game.PlayerToken;
@@ -20,6 +23,7 @@ import com.zuehlke.jhp.bucamp.android.jass.controller.GameController;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.JassSettings;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.Player;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.SettingsCreator;
+import com.zuehlke.jhp.bucamp.android.server.NanoHTTPD;
 
 public class MainActivity extends Activity {
 
