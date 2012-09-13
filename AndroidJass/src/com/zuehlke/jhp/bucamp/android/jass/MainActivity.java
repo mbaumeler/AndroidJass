@@ -42,13 +42,14 @@ public class MainActivity extends Activity {
 
 		gameController = new GameController(observableGame, this, settings);
 		observableGame.addObserver(gameController);
-		observableGame.addObserver(new AnsageObserver(gameController
-				.getHumanPlayerToken(), this));
+		
 	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
+		observableGame.addObserver(new AnsageObserver(gameController
+				.getHumanPlayerToken(), this));
 		observableGame.notifyObservers();
 	}
 
