@@ -6,7 +6,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Handler;
-import ch.matterjaeger.extremely.cool.ai.NextGenJassAI;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
@@ -62,7 +61,7 @@ public class GameController implements JassModelObserver {
 		PlayStrategy strategy = getStrategyForPlayerToken(token);
 		
 		if (currentMatch.getAnsage() == null) {
-			currentMatch.setAnsage(new NextGenJassAI().getAnsage(currentMatch));
+			currentMatch.setAnsage(new SimpleStrategyEngine().create().getAnsage(currentMatch));
 		}
 		
 		System.out.println("----" + strategy.getClass());
@@ -74,7 +73,7 @@ public class GameController implements JassModelObserver {
 	
 	private PlayStrategy getStrategyForPlayerToken(PlayerToken token) {
 	
-		return new NextGenJassAI();
+		return new SimpleStrategyEngine().create();
 //		String className = players.get(token).getStrategy();
 //		
 //		if( strategies.containsKey(className)) {
