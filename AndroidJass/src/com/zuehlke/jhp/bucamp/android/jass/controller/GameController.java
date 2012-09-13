@@ -10,7 +10,7 @@ import android.os.Handler;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
-import ch.mbaumeler.jass.extended.ai.PlayStrategy;
+import ch.mbaumeler.jass.extended.ai.JassStrategy;
 import ch.mbaumeler.jass.extended.ai.simple.SimpleStrategyEngine;
 import ch.mbaumeler.jass.extended.ui.JassModelObserver;
 import ch.mbaumeler.jass.extended.ui.ObservableGame;
@@ -28,7 +28,7 @@ public class GameController implements JassModelObserver {
 	private JassSettings settings;
 	private MainActivity mainActivity;
 	private Map<PlayerToken, Player> players = new HashMap<PlayerToken, Player>();
-	private Map<String, PlayStrategy> strategies = new HashMap<String, PlayStrategy>();
+	private Map<String, JassStrategy> strategies = new HashMap<String, JassStrategy>();
 
 	public GameController(ObservableGame game, MainActivity mainActivity,
 			JassSettings settings) {
@@ -51,27 +51,34 @@ public class GameController implements JassModelObserver {
 	}
 
 	public void updated(Event arg0, PlayerToken arg1, Object arg2) {
-		if (this.game.getCurrentMatch().getCardsOnTable().size() == 4) {
-			if (isGameFinished()) {
-				this.mainActivity.showGameFinishedDialog();
-				return;
+		Match currentMatch = game.getCurrentMatch();
+		int cardsOnTable = currentMatch.getCardsOnTable().size();
+		if (cardsOnTable == 4 && isGameFinished()) {
+			this.mainActivity.showGameFinishedDialog();
+			return;
+		}
+		if (isComputerPlayer(currentMatch) && cardsOnTable != 4 ) {
+			initTimer();
+		}
+
+	}
+
+	private boolean isComputerPlayer(Match currentMatch) {
+		return !currentMatch.getActivePlayer().equals(getHumanPlayerToken());
+	}
+
+	private void initTimer() {
+		this.timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				handler.post(new Runnable() {
+					public void run() {
+						playCard();
+					}
+				});
+
 			}
-		}
-		if (!this.game.getCurrentMatch().getActivePlayer()
-				.equals(getHumanPlayerToken())) {
-			this.timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					handler.post(new Runnable() {
-						public void run() {
-							playCard();
-						}
-					});
-
-				}
-			}, settings.getPlayDelay());
-		}
-
+		}, settings.getPlayDelay());
 	}
 
 	private boolean isGameFinished() {
@@ -90,7 +97,7 @@ public class GameController implements JassModelObserver {
 		if (currentMatch.getActivePlayer() != getHumanPlayerToken()) {
 
 			PlayerToken token = this.game.getCurrentMatch().getActivePlayer();
-			PlayStrategy strategy = getStrategyForPlayerToken(token);
+			JassStrategy strategy = getStrategyForPlayerToken(token);
 			if (currentMatch.getAnsage() == null) {
 				currentMatch.setAnsage(new SimpleStrategyEngine().create()
 						.getAnsage(currentMatch));
@@ -102,13 +109,13 @@ public class GameController implements JassModelObserver {
 		}
 	}
 
-	private PlayStrategy getStrategyForPlayerToken(PlayerToken token) {
+	private JassStrategy getStrategyForPlayerToken(PlayerToken token) {
 		String className = players.get(token).getStrategy();
 
 		if (strategies.containsKey(className)) {
 			return strategies.get(className);
 		} else {
-			PlayStrategy s = null;
+			JassStrategy s = null;
 			if (className
 					.equals("ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy")) {
 				s = new SimpleStrategyEngine().create();
