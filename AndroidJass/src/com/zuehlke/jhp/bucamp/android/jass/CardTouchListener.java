@@ -20,7 +20,7 @@ public class CardTouchListener implements OnTouchListener {
         String serializedCard = serialize(card);
 		ClipData data = ClipData.newPlainText(serializedCard, serializedCard);
         view.startDrag(data, new View.DragShadowBuilder(view), view, 0);
-        view.setVisibility(View.INVISIBLE);
+        //view.setVisibility(View.INVISIBLE);
         return true;
       } else {
         return false;
