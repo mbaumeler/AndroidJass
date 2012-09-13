@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Handler;
+import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ai.PlayStrategy;
@@ -55,10 +56,16 @@ public class GameController implements JassModelObserver {
 	}
 
 	public void playCard() {
-		PlayerToken token = this.game.getCurrentMatch().getActivePlayer();
+		Match currentMatch = this.game.getCurrentMatch();
+		PlayerToken token = currentMatch.getActivePlayer();
 		PlayStrategy strategy = getStrategyForPlayerToken(token);
-		Card cardToPlay = strategy.getCardToPlay(this.game.getCurrentMatch());
-		this.game.getCurrentMatch().playCard(cardToPlay);
+		
+		if (currentMatch.getAnsage() == null) {
+			currentMatch.setAnsage(new SimpleStrategyEngine().create().getAnsage(currentMatch));
+		}
+		
+		Card cardToPlay = strategy.getCardToPlay(currentMatch);
+		currentMatch.playCard(cardToPlay);
 	}
 	
 	
