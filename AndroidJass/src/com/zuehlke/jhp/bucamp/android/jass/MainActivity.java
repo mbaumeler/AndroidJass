@@ -1,14 +1,12 @@
 package com.zuehlke.jhp.bucamp.android.jass;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import ch.mbaumeler.jass.core.Game;
@@ -18,16 +16,14 @@ import ch.mbaumeler.jass.extended.ui.ObservableGame;
 
 import com.zuehlke.jhp.bucamp.android.jass.controller.GameController;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.JassSettings;
-import com.zuehlke.jhp.bucamp.android.jass.settings.model.Player;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.SettingsCreator;
 
 public class MainActivity extends Activity {
 
+	public static final int GAME_FINISHED_DIALOG_ID = 0;
 	private static Game game;
 	private ObservableGame observableGame;
 	private GameController gameController;
-
-	private Map<PlayerToken, Player> players = new HashMap<PlayerToken, Player>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,14 +40,7 @@ public class MainActivity extends Activity {
 		}
 		observableGame = new ObservableGame(game);
 
-		players = new HashMap<PlayerToken, Player>();
-		List<PlayerToken> all = observableGame.getPlayerRepository().getAll();
-		players.put(all.get(0), settings.getTeam1().getPlayer1());
-		players.put(all.get(1), settings.getTeam2().getPlayer1());
-		players.put(all.get(2), settings.getTeam1().getPlayer2());
-		players.put(all.get(3), settings.getTeam2().getPlayer2());
-
-		gameController = new GameController(observableGame, players, settings);
+		gameController = new GameController(observableGame, this, settings);
 		observableGame.addObserver(gameController);
 		observableGame.addObserver(new AnsageObserver(gameController
 				.getHumanPlayerToken(), this));
@@ -64,7 +53,7 @@ public class MainActivity extends Activity {
 	}
 
 	public String getName(PlayerToken token) {
-		return players.get(token).getName();
+		return gameController.getPlayerName(token);
 	}
 
 	public ObservableGame getGame() {
@@ -106,6 +95,27 @@ public class MainActivity extends Activity {
 	}
 
 	public void restartGame(MenuItem item) {
+		restartGame();
+	}
+
+	private void restartGame() {
 		startActivity(new Intent(this, MainActivity.class));
 	}
+
+	public void showGameFinishedDialog() {
+		DialogFragment dialogFragment = GameFinishedDialogFragment.newInstance(
+				game, getGameController().getHumanPlayerToken());
+		dialogFragment.show(getFragmentManager(), "dialog");
+	}
+
+	public void doPositiveClick() {
+		// Do stuff here.
+		Log.i("FragmentAlertDialog", "Positive click!");
+		restartGame();
+	}
+
+	public void doNegativeClick() {
+		startActivity(new Intent(this, SetupActivity.class));
+	}
+
 }
