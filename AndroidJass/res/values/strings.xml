@@ -24,5 +24,8 @@
     <string name="score_you_title">You:</string>
     <string name="score_rival_title">Rival:</string>
     <string name="score_points_initial">0</string>
+    <string name="game_finished_dialog_title">Game finished!</string>
+    <string name="game_finished_dialog_ok">Start new game</string>
+    <string name="game_finished_dialog_cancel">Settings</string>
 
 </resources>

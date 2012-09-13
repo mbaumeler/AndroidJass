@@ -28,6 +28,9 @@ public class HandFragment extends Fragment implements JassModelObserver {
 	private RelativeLayout layout;
 	private HashMap<String, Integer> cardImageMap;
 	
+	private int height = 200;
+	private int width = 480;
+	
 	{
 		cardImageMap = new HashMap<String, Integer>();
 		cardImageMap.put(CardSuit.CLUBS.name() + CardValue.TEN.name(), R.drawable.clubs_10);
@@ -82,13 +85,22 @@ public class HandFragment extends Fragment implements JassModelObserver {
 
 	private void initCard(Card card, int numberTotal, int index) {
 		ImageView imageView = new ImageView(mainActivity.getApplicationContext()); // findViewById(id);
-		imageView.setOnTouchListener(new CardTouchListener(card));
+		
+		if (!mainActivity.getGame().getCurrentMatch().isCardPlayable(card)) {
+			imageView.setAlpha(0.1f);
+		} else {
+			// imageView.setBackgroundResource(R.drawable.card_shape);
+			imageView.setOnTouchListener(new CardTouchListener(card));
+		}
 		imageView.setLongClickable(true);
 		imageView.setImageResource(cardImageMap.get(card.getSuit().name() + card.getValue().name()));
-		int height = this.getView().getHeight()-20;
-		int width = this.getView().getWidth()-height;
-		int xpos = (width / numberTotal) * index;
-		LayoutParams params = new RelativeLayout.LayoutParams(height, this.getView().getHeight());
+		if (this.getView().getWidth() > 0) {
+			height = this.getView().getHeight()-20;
+			width = this.getView().getWidth();
+		}
+		int card_width = (height * 2) / 3;
+		int xpos = ((width-card_width) / numberTotal) * index;
+		LayoutParams params = new RelativeLayout.LayoutParams(card_width, this.getView().getHeight());
 		params.topMargin = 0;
 		params.leftMargin = xpos;
 		layout.addView(imageView, params);
@@ -120,7 +132,7 @@ public class HandFragment extends Fragment implements JassModelObserver {
 				initCard(card, cardsInHand.size(), index);
 				index++;
 			}
-		
+			layout.requestLayout();
 
 		}
 	}
