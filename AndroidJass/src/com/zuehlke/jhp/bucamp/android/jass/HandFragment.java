@@ -112,18 +112,8 @@ public class HandFragment extends Fragment implements JassModelObserver {
 			Collections.sort(cardsInHand, new Comparator<Card>() {
 
 				public int compare(Card card1, Card card2) {
-				return card1.getSuit() == card2.getSuit() ? compareValue(card1, card2) : compareSuit(card1, card2);
+				return card1.getSuit() == card2.getSuit() ? card1.getValue().compareTo(card2.getValue()) : card1.getSuit().compareTo(card2.getSuit());
 				}
-
-				private int compareSuit(Card card1, Card card2) {
-					return card1.getSuit().compareTo(card2.getSuit());
-				}
-
-				private int compareValue(Card card1, Card card2) {
-					return card1.getValue().compareTo(card2.getValue());
-				}
-				
-				
 			});
 			
 			for (Card card : cardsInHand) {
