@@ -7,7 +7,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Handler;
-import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ai.PlayStrategy;
@@ -92,26 +91,27 @@ public class GameController implements JassModelObserver {
 
 	private PlayStrategy getStrategyForPlayerToken(PlayerToken token) {
 		String className = players.get(token).getStrategy();
-		
-		if( strategies.containsKey(className)) {
+
+		if (strategies.containsKey(className)) {
 			return strategies.get(className);
-		}
-		else {
+		} else {
 			PlayStrategy s = null;
-			if( className.equals("ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy")) {
+			if (className
+					.equals("ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy")) {
 				s = new SimpleStrategyEngine().create();
-			}
-			else if( className.equals("ch.mbaumeler.jass.extended.ai.dummy.DummyStrategy")) {
+			} else if (className
+					.equals("ch.mbaumeler.jass.extended.ai.dummy.DummyStrategy")) {
 				s = null;
 			}
-			
-			if( s == null) {
+
+			if (s == null) {
 				s = new SimpleStrategyEngine().create();
 			}
 			strategies.put(className, s);
-			
+
 			return s;
 		}
+	}
 
 	public String getPlayerName(PlayerToken token) {
 		return players.get(token).getName();
