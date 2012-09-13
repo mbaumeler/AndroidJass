@@ -1,9 +1,5 @@
 package com.zuehlke.jhp.bucamp.android.jass;
 
-import ch.mbaumeler.jass.core.Game;
-import ch.mbaumeler.jass.core.card.CardSuit;
-import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.Ansage.SpielModi;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,12 +7,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import ch.mbaumeler.jass.core.card.CardSuit;
+import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.core.game.Ansage.SpielModi;
+import ch.mbaumeler.jass.extended.ui.ObservableGame;
 
 public class AnsageDialog extends DialogFragment {
 
-	private Game game;
+	private ObservableGame game;
 
-	public AnsageDialog(Game game) {
+	public AnsageDialog(ObservableGame game) {
 		this.game = game;
 	}
 
@@ -39,8 +39,20 @@ public class AnsageDialog extends DialogFragment {
 		addListener(R.id.selectSchaufel, view, new Ansage(CardSuit.SPADES));
 		addListener(R.id.selectObenabe, view, new Ansage(SpielModi.OBENABE));
 		addListener(R.id.selectUndeuffe, view, new Ansage(SpielModi.UNDEUFE));
+		
+		
+		getButton(R.id.refresh, view).setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				dismiss();
+				game.notifyObservers();
+			}
+		});
+		
 		return view;
 	}
+	
+	
 
 	private void addListener(int id, View view, final Ansage ansage) {
 		getButton(id, view).setOnClickListener(new OnClickListener() {

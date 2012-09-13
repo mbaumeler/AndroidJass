@@ -9,6 +9,7 @@ public class AnsageObserver implements JassModelObserver {
 
 	private PlayerToken humanPlayer;
 	private MainActivity mainActivity;
+	
 
 	public AnsageObserver(PlayerToken humanPlayer, MainActivity mainActivity) {
 		this.humanPlayer = humanPlayer;
@@ -17,6 +18,8 @@ public class AnsageObserver implements JassModelObserver {
 
 	public void updated(Event event, PlayerToken playerToken, Object object) {
 
+		
+		
 		Match currentMatch = mainActivity.getGame().getCurrentMatch();
 
 		PlayerToken activePlayer = mainActivity.getGame().getCurrentMatch()
