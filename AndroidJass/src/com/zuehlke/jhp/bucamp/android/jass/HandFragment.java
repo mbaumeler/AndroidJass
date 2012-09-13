@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
-import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
@@ -22,7 +21,6 @@ import ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event;
 
 public class HandFragment extends Fragment implements JassModelObserver {
 
-	private Game game;
 	private MainActivity mainActivity;
 	private RelativeLayout layout;
 	private HashMap<String, Integer> cardImageMap;
@@ -77,7 +75,6 @@ public class HandFragment extends Fragment implements JassModelObserver {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		mainActivity.getGame().addObserver(this);
-		game = mainActivity.getGame();
 	}
 
 	private void initCard(Card card, int numberTotal, int index) {
@@ -103,10 +100,10 @@ public class HandFragment extends Fragment implements JassModelObserver {
 	public void updated(Event event, PlayerToken playerToken, Object object) {
 		layout = (RelativeLayout) this.getView().findViewById(R.id.handFragmentRow1);
 		if (layout != null) {
-			int roundsCompleted = game.getCurrentMatch().getRoundsCompleted();
-			int cardsOnTable = game.getCurrentMatch().getCardsOnTable().size();
+			int roundsCompleted = mainActivity.getGame().getCurrentMatch().getRoundsCompleted();
+			int cardsOnTable = mainActivity.getGame().getCurrentMatch().getCardsOnTable().size();
 			int index = 0;
-			List<Card> cardsInHand = game.getCurrentMatch().getCards(
+			List<Card> cardsInHand = mainActivity.getGame().getCurrentMatch().getCards(
 					mainActivity.getGameController().getHumanPlayerToken());
 			layout.removeAllViews();
 			for (Card card : cardsInHand) {
@@ -124,6 +121,7 @@ public class HandFragment extends Fragment implements JassModelObserver {
 	//			initCard(R.id.button7, cardsInHand.get(7));
 	//			initCard(R.id.button8, cardsInHand.get(8));
 			}
+
 		}
 	}
 
