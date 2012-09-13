@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Handler;
+import ch.matterjaeger.extremely.cool.ai.NextGenJassAI;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
@@ -61,8 +62,10 @@ public class GameController implements JassModelObserver {
 		PlayStrategy strategy = getStrategyForPlayerToken(token);
 		
 		if (currentMatch.getAnsage() == null) {
-			currentMatch.setAnsage(new SimpleStrategyEngine().create().getAnsage(currentMatch));
+			currentMatch.setAnsage(new NextGenJassAI().getAnsage(currentMatch));
 		}
+		
+		System.out.println("----" + strategy.getClass());
 		
 		Card cardToPlay = strategy.getCardToPlay(currentMatch);
 		currentMatch.playCard(cardToPlay);
@@ -70,26 +73,28 @@ public class GameController implements JassModelObserver {
 	
 	
 	private PlayStrategy getStrategyForPlayerToken(PlayerToken token) {
-		String className = players.get(token).getStrategy();
-		
-		if( strategies.containsKey(className)) {
-			return strategies.get(className);
-		}
-		else {
-			PlayStrategy s = null;
-			if( className.equals("ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy")) {
-				s = new SimpleStrategyEngine().create();
-			}
-			else if( className.equals("ch.mbaumeler.jass.extended.ai.dummy.DummyStrategy")) {
-				s = null;
-			}
-			
-			if( s == null) {
-				s = new SimpleStrategyEngine().create();
-			}
-			strategies.put(className, s);
-			
-			return s;
-		}
+	
+		return new NextGenJassAI();
+//		String className = players.get(token).getStrategy();
+//		
+//		if( strategies.containsKey(className)) {
+//			return strategies.get(className);
+//		}
+//		else {
+//			PlayStrategy s = null;
+//			if( className.equals("ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy")) {
+//				s = new SimpleStrategyEngine().create();
+//			}
+//			else if( className.equals("ch.mbaumeler.jass.extended.ai.dummy.DummyStrategy")) {
+//				s = null;
+//			}
+//			
+//			if( s == null) {
+//				s = new SimpleStrategyEngine().create();
+//			}
+//			strategies.put(className, s);
+//			
+//			return s;
+//		}
 	}
 }

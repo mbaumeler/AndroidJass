@@ -1,5 +1,6 @@
 package com.zuehlke.jhp.bucamp.android.jass;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.JassEngine;
 import ch.mbaumeler.jass.core.game.PlayerToken;
@@ -20,6 +22,7 @@ import com.zuehlke.jhp.bucamp.android.jass.controller.GameController;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.JassSettings;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.Player;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.SettingsCreator;
+import com.zuehlke.jhp.bucamp.android.server.NanoHTTPD;
 
 public class MainActivity extends Activity {
 
@@ -93,6 +96,20 @@ public class MainActivity extends Activity {
 		startActivity(new Intent(this, SetupActivity.class));
 	}
 
+	public void startServer(View view) {
+		try {
+			NanoHTTPD nanoHTTPD = new NanoHTTPD(9998, new File("."));
+			
+			
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}
+	}
+
+	public static void main(String[] args) throws Exception{
+		NanoHTTPD nanoHTTPD = new NanoHTTPD(9998, new File("."));
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
