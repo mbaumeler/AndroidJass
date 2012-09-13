@@ -1,5 +1,8 @@
 package com.zuehlke.jhp.bucamp.android.jass;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -100,27 +103,24 @@ public class HandFragment extends Fragment implements JassModelObserver {
 	public void updated(Event event, PlayerToken playerToken, Object object) {
 		layout = (RelativeLayout) this.getView().findViewById(R.id.handFragmentRow1);
 		if (layout != null) {
-			int roundsCompleted = mainActivity.getGame().getCurrentMatch().getRoundsCompleted();
-			int cardsOnTable = mainActivity.getGame().getCurrentMatch().getCardsOnTable().size();
 			int index = 0;
 			List<Card> cardsInHand = mainActivity.getGame().getCurrentMatch().getCards(
 					mainActivity.getGameController().getHumanPlayerToken());
 			layout.removeAllViews();
+			
+			cardsInHand = new ArrayList<Card>(cardsInHand);
+			Collections.sort(cardsInHand, new Comparator<Card>() {
+
+				public int compare(Card card1, Card card2) {
+				return card1.getSuit() == card2.getSuit() ? card1.getValue().compareTo(card2.getValue()) : card1.getSuit().compareTo(card2.getSuit());
+				}
+			});
+			
 			for (Card card : cardsInHand) {
 				initCard(card, cardsInHand.size(), index);
 				index++;
 			}
-			if (roundsCompleted == 0 && cardsOnTable == 0) {
-	//			initCard(R.id.button0, cardsInHand.get(0));
-	//			initCard(R.id.button1, cardsInHand.get(1));
-	//			initCard(R.id.button2, cardsInHand.get(2));
-	//			initCard(R.id.button3, cardsInHand.get(3));
-	//			initCard(R.id.button4, cardsInHand.get(4));
-	//			initCard(R.id.button5, cardsInHand.get(5));
-	//			initCard(R.id.button6, cardsInHand.get(6));
-	//			initCard(R.id.button7, cardsInHand.get(7));
-	//			initCard(R.id.button8, cardsInHand.get(8));
-			}
+		
 
 		}
 	}
