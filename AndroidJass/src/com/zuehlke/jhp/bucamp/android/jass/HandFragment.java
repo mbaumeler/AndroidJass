@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
@@ -85,8 +86,8 @@ public class HandFragment extends Fragment implements JassModelObserver {
 
 	private void initCard(Card card, int numberTotal, int index) {
 		ImageView imageView = new ImageView(mainActivity.getApplicationContext()); // findViewById(id);
-		
-		if (!mainActivity.getGame().getCurrentMatch().isCardPlayable(card)) {
+		Match currentMatch = mainActivity.getGame().getCurrentMatch();
+		if (!mainActivity.getGame().getCurrentMatch().isCardPlayable(card) && currentMatch.getAnsage() != null) {
 			imageView.setAlpha(0.1f);
 		} else {
 			// imageView.setBackgroundResource(R.drawable.card_shape);
