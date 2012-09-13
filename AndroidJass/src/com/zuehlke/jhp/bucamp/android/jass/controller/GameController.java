@@ -26,7 +26,7 @@ public class GameController implements JassModelObserver {
 	private ObservableGame game;
 	private JassSettings settings;
 	private MainActivity mainActivity;
-	private Map<PlayerToken, Player> players;
+	private Map<PlayerToken, Player> players = new HashMap<PlayerToken, Player>();
 	private Map<String, PlayStrategy> strategies = new HashMap<String, PlayStrategy>();
 
 	public GameController(ObservableGame game, MainActivity mainActivity,
