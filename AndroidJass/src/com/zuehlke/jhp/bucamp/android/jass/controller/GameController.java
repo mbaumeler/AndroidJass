@@ -57,7 +57,7 @@ public class GameController implements JassModelObserver {
 			this.mainActivity.showGameFinishedDialog();
 			return;
 		}
-		if (isComputerPlayer(currentMatch) && cardsOnTable != 4) {
+		if (isComputerPlayer(currentMatch) && cardsOnTable != 4 ) {
 			initTimer();
 		}
 

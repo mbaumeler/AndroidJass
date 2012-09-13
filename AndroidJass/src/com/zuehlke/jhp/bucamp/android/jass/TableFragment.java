@@ -68,7 +68,7 @@ public class TableFragment extends Fragment implements JassModelObserver,
 		setPlayerName(R.id.player3Name, all.get(2));
 		setPlayerName(R.id.player4Name, all.get(3));
 
-		mainActivity.findViewById(R.id.player1).setOnDragListener(this);
+		mainActivity.findViewById(R.id.tableFragment).setOnDragListener(this);
 	}
 
 	private void setPlayerName(int id, PlayerToken token) {

@@ -121,6 +121,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void refresh(View view) {
+		
 		observableGame.notifyObservers();
 		gameController.playCard();
 	}
