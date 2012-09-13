@@ -36,5 +36,10 @@
         android:id="@+id/selectObenabe"
         android:layout_weight="1"
         android:text="@string/obenabe" />
+    
+     <Button
+        android:id="@+id/refresh"
+        android:layout_weight="1"
+        android:text="R" />
 
 </TableRow>

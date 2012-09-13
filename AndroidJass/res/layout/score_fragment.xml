@@ -12,6 +12,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="@string/score_you_title"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textColor="@color/black" />
 
 </RelativeLayout>
