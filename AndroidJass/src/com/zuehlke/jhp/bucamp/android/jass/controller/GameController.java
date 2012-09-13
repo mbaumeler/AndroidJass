@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Handler;
+import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ai.PlayStrategy;
@@ -24,7 +25,7 @@ public class GameController implements JassModelObserver {
 	private ObservableGame game;
 	private JassSettings settings;
 	private Map<PlayerToken, Player> players;
-	private Map<String, PlayStrategy> strategies = new HashMap<String, PlayStrategy>();
+	private Map<String, PlayStrategy> playStrategyies = new HashMap<String, PlayStrategy>();
 
 	public GameController(ObservableGame game, Map<PlayerToken, Player> players, JassSettings settings) {
 		this.game = game;
@@ -57,16 +58,21 @@ public class GameController implements JassModelObserver {
 	public void playCard() {
 		PlayerToken token = this.game.getCurrentMatch().getActivePlayer();
 		PlayStrategy strategy = getStrategyForPlayerToken(token);
+		Match currentMatch = game.getCurrentMatch();
+		if (currentMatch.getAnsage() == null) {
+			currentMatch.setAnsage(new SimpleStrategyEngine().create().getAnsage(currentMatch));
+			
+		}
 		Card cardToPlay = strategy.getCardToPlay(this.game.getCurrentMatch());
-		this.game.getCurrentMatch().playCard(cardToPlay);
+		currentMatch.playCard(cardToPlay);
 	}
 	
 	
 	private PlayStrategy getStrategyForPlayerToken(PlayerToken token) {
 		String className = players.get(token).getStrategy();
 		
-		if( strategies.containsKey(className)) {
-			return strategies.get(className);
+		if( playStrategyies.containsKey(className)) {
+			return playStrategyies.get(className);
 		}
 		else {
 			PlayStrategy s = null;
@@ -80,7 +86,7 @@ public class GameController implements JassModelObserver {
 			if( s == null) {
 				s = new SimpleStrategyEngine().create();
 			}
-			strategies.put(className, s);
+			playStrategyies.put(className, s);
 			
 			return s;
 		}
