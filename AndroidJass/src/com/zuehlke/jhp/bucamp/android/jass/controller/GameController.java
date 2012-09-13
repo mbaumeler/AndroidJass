@@ -6,7 +6,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Handler;
-import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ai.PlayStrategy;
@@ -56,44 +55,34 @@ public class GameController implements JassModelObserver {
 	}
 
 	public void playCard() {
-		Match currentMatch = this.game.getCurrentMatch();
-		PlayerToken token = currentMatch.getActivePlayer();
+		PlayerToken token = this.game.getCurrentMatch().getActivePlayer();
 		PlayStrategy strategy = getStrategyForPlayerToken(token);
-		
-		if (currentMatch.getAnsage() == null) {
-			currentMatch.setAnsage(new SimpleStrategyEngine().create().getAnsage(currentMatch));
-		}
-		
-		System.out.println("----" + strategy.getClass());
-		
-		Card cardToPlay = strategy.getCardToPlay(currentMatch);
-		currentMatch.playCard(cardToPlay);
+		Card cardToPlay = strategy.getCardToPlay(this.game.getCurrentMatch());
+		this.game.getCurrentMatch().playCard(cardToPlay);
 	}
 	
 	
 	private PlayStrategy getStrategyForPlayerToken(PlayerToken token) {
-	
-		return new SimpleStrategyEngine().create();
-//		String className = players.get(token).getStrategy();
-//		
-//		if( strategies.containsKey(className)) {
-//			return strategies.get(className);
-//		}
-//		else {
-//			PlayStrategy s = null;
-//			if( className.equals("ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy")) {
-//				s = new SimpleStrategyEngine().create();
-//			}
-//			else if( className.equals("ch.mbaumeler.jass.extended.ai.dummy.DummyStrategy")) {
-//				s = null;
-//			}
-//			
-//			if( s == null) {
-//				s = new SimpleStrategyEngine().create();
-//			}
-//			strategies.put(className, s);
-//			
-//			return s;
-//		}
+		String className = players.get(token).getStrategy();
+		
+		if( strategies.containsKey(className)) {
+			return strategies.get(className);
+		}
+		else {
+			PlayStrategy s = null;
+			if( className.equals("ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy")) {
+				s = new SimpleStrategyEngine().create();
+			}
+			else if( className.equals("ch.mbaumeler.jass.extended.ai.dummy.DummyStrategy")) {
+				s = null;
+			}
+			
+			if( s == null) {
+				s = new SimpleStrategyEngine().create();
+			}
+			strategies.put(className, s);
+			
+			return s;
+		}
 	}
 }
