@@ -53,8 +53,6 @@ public class MainActivity extends Activity {
 
 		gameController = new GameController(observableGame, players, settings);
 		observableGame.addObserver(gameController);
-		gameController = new GameController(observableGame, players, settings);
-		observableGame.addObserver(gameController);
 		observableGame.addObserver(new AnsageObserver(gameController
 				.getHumanPlayerToken(), this));
 	}
