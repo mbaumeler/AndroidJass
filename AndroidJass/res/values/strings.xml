@@ -29,5 +29,6 @@
     <string name="game_finished_dialog_cancel">Settings</string>
     <string name="team_won_message">Your team won</string>
     <string name="team_lost_message">Your team lost</string>
+    <string name="menu_item_game_speed">Game Speed</string>
 
 </resources>
