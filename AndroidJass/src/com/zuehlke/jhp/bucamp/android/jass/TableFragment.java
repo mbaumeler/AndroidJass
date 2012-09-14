@@ -14,11 +14,9 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.mbaumeler.jass.core.Game;
@@ -233,7 +231,8 @@ public class TableFragment extends Fragment implements JassModelObserver,
 	public boolean onDrag(View table, DragEvent event) {
 		Drawable enterShape = getResources().getDrawable(
 				R.drawable.shape_droptarget);
-		Drawable normalShape = getResources().getDrawable(R.drawable.table_texture);
+		Drawable normalShape = getResources().getDrawable(
+				R.drawable.table_texture);
 
 		switch (event.getAction()) {
 		case DragEvent.ACTION_DRAG_STARTED:

@@ -32,13 +32,14 @@ public class GameFinishedDialogFragment extends DialogFragment {
 		String message;
 		int icon;
 		if (humanPlayerTeamScore > oppositeTeamScore) {
-			message = "Your team won ";
+			message = getString(R.string.team_won_message);
 			icon = R.drawable.winner_smiley;
 		} else {
-			message = "Your team lost ";
-			icon = R.drawable.looser_smiley;
+			message = getString(R.string.team_lost_message);
+			icon = R.drawable.loser_smiley;
 		}
-		message = message + humanPlayerTeamScore + "-" + oppositeTeamScore;
+		message = message + " " + humanPlayerTeamScore + "-"
+				+ oppositeTeamScore;
 
 		return new AlertDialog.Builder(getActivity())
 				.setIcon(icon)
@@ -49,7 +50,7 @@ public class GameFinishedDialogFragment extends DialogFragment {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
 								((MainActivity) getActivity())
-										.doPositiveClick();
+										.doNewGameClick();
 							}
 						})
 				.setNegativeButton(R.string.game_finished_dialog_cancel,
@@ -57,7 +58,7 @@ public class GameFinishedDialogFragment extends DialogFragment {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
 								((MainActivity) getActivity())
-										.doNegativeClick();
+										.doGoToSettingsClick();
 							}
 						}).create();
 	}
