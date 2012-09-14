@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.zuehlke.jhp.bucamp.android.jass.audio.Sample;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.drawable.Drawable;
@@ -33,6 +31,8 @@ import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ui.JassModelObserver;
 import ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event;
+
+import com.zuehlke.jhp.bucamp.android.jass.audio.Sample;
 
 public class TableFragment extends Fragment implements JassModelObserver,
 		OnDragListener {

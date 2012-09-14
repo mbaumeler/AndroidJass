@@ -143,7 +143,6 @@ public class HandFragment extends Fragment implements JassModelObserver {
 			adjustedHeight = height;
 			imageView.setOnTouchListener(new CardTouchListener(card));
 		} else {
-			
 
 		}
 

@@ -23,22 +23,21 @@ import com.zuehlke.jhp.bucamp.android.jass.controller.GameController;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.JassSettings;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.SettingsCreator;
 
-public class MainActivity extends Activity implements
-		SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends Activity {
 
 	private static final String GAME_FINISHED_DIALOG_TAG = "GameFinishedDialogFragment";
 	private static Game game;
 	private ObservableGame observableGame;
 	private GameController gameController;
-	AudioManager audioManager ;
-	
+	AudioManager audioManager;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		SharedPreferences sharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		JassSettings settings = SettingsCreator
 				.createFromPreferences(sharedPrefs);
-		
+
 		audioManager = new AudioManager();
 		audioManager.init(getApplicationContext());
 		audioManager.repeat(Sample.BACKGROUND_NOISE);
@@ -48,7 +47,8 @@ public class MainActivity extends Activity implements
 		}
 		observableGame = new ObservableGame(game);
 
-		gameController = new GameController(observableGame, this, settings, audioManager);
+		gameController = new GameController(observableGame, this, settings,
+				audioManager);
 		observableGame.addObserver(gameController);
 
 		super.onCreate(savedInstanceState);
@@ -144,24 +144,10 @@ public class MainActivity extends Activity implements
 		}
 	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		PreferenceManager.getDefaultSharedPreferences(this)
-				.unregisterOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PreferenceManager.getDefaultSharedPreferences(this)
-				.registerOnSharedPreferenceChangeListener(this);
-	}
-
 	public GameController getGameController() {
 		return gameController;
 	}
-	
+
 	public AudioManager getAudioManager() {
 		return audioManager;
 	}
@@ -192,15 +178,4 @@ public class MainActivity extends Activity implements
 		observableGame.notifyObservers();
 		gameController.playCard();
 	}
-
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
-		if (key.equals(SettingsCreator.KEY_PLAY_DELAY)) {
-			this.gameController
-					.setGameSpeed(sharedPreferences.getLong(key, 0L));
-
-		}
-
-	}
-
 }
