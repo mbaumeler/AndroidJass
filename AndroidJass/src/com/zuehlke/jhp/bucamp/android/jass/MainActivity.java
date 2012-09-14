@@ -14,6 +14,8 @@ import ch.mbaumeler.jass.core.JassEngine;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ui.ObservableGame;
 
+import com.zuehlke.jhp.bucamp.android.jass.audio.AudioManager;
+import com.zuehlke.jhp.bucamp.android.jass.audio.Sample;
 import com.zuehlke.jhp.bucamp.android.jass.controller.GameController;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.JassSettings;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.SettingsCreator;
@@ -24,20 +26,25 @@ public class MainActivity extends Activity {
 	private static Game game;
 	private ObservableGame observableGame;
 	private GameController gameController;
-
+	AudioManager audioManager ;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		SharedPreferences sharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		JassSettings settings = SettingsCreator
 				.createFromPreferences(sharedPrefs);
+		
+		audioManager = new AudioManager();
+		audioManager.init(getApplicationContext());
+		audioManager.repeat(Sample.BACKGROUND_NOISE);
 
 		if (savedInstanceState == null || game == null) {
 			game = new JassEngine().createJassGame();
 		}
 		observableGame = new ObservableGame(game);
 
-		gameController = new GameController(observableGame, this, settings);
+		gameController = new GameController(observableGame, this, settings, audioManager);
 		observableGame.addObserver(gameController);
 
 		super.onCreate(savedInstanceState);
@@ -92,6 +99,10 @@ public class MainActivity extends Activity {
 
 	public GameController getGameController() {
 		return gameController;
+	}
+	
+	public AudioManager getAudioManager() {
+		return audioManager;
 	}
 
 	public void restartGame(MenuItem item) {
