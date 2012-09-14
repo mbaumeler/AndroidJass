@@ -23,7 +23,8 @@ import com.zuehlke.jhp.bucamp.android.jass.controller.GameController;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.JassSettings;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.SettingsCreator;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements
+		SharedPreferences.OnSharedPreferenceChangeListener {
 
 	private static final String GAME_FINISHED_DIALOG_TAG = "GameFinishedDialogFragment";
 	private static Game game;
@@ -91,12 +92,17 @@ public class MainActivity extends Activity {
 					.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 
 						public boolean onMenuItemClick(MenuItem item) {
-							// Set an EditText view to get user input
+							final SharedPreferences prefs = PreferenceManager
+									.getDefaultSharedPreferences(MainActivity.this);
 							final EditText input = new EditText(
 									MainActivity.this);
+							input.setText(prefs.getString(
+									SettingsCreator.KEY_PLAY_DELAY, "1000"));
 							new AlertDialog.Builder(MainActivity.this)
-									.setTitle("Game Speed Setting")
-									.setMessage("Set the game speed")
+									.setTitle(
+											R.string.game_speed_setting_dialog_title)
+									.setMessage(
+											R.string.game_speed_setting_dialog_message)
 									.setView(input)
 									.setPositiveButton(
 											"Ok",
@@ -104,15 +110,13 @@ public class MainActivity extends Activity {
 												public void onClick(
 														DialogInterface dialog,
 														int whichButton) {
-													SharedPreferences settings = PreferenceManager
-															.getDefaultSharedPreferences(MainActivity.this);
-													SharedPreferences.Editor editor = settings
+
+													SharedPreferences.Editor editor = prefs
 															.edit();
-													editor.putLong(
+													editor.putString(
 															SettingsCreator.KEY_PLAY_DELAY,
-															Long.valueOf(input
-																	.getText()
-																	.toString()));
+															input.getText()
+																	.toString());
 													editor.commit();
 												}
 											})
@@ -178,4 +182,28 @@ public class MainActivity extends Activity {
 		observableGame.notifyObservers();
 		gameController.playCard();
 	}
+
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+			String key) {
+		if (key.equals(SettingsCreator.KEY_PLAY_DELAY)) {
+			this.gameController.setGameSpeed(Long.valueOf(sharedPreferences
+					.getString(key, "1000")));
+
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		PreferenceManager.getDefaultSharedPreferences(this)
+				.unregisterOnSharedPreferenceChangeListener(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		PreferenceManager.getDefaultSharedPreferences(this)
+				.registerOnSharedPreferenceChangeListener(this);
+	}
+
 }
