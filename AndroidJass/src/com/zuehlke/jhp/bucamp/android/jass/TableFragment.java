@@ -16,9 +16,11 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.mbaumeler.jass.core.Game;
@@ -67,6 +69,14 @@ public class TableFragment extends Fragment implements JassModelObserver,
 		setPlayerName(R.id.player4Name, all.get(3));
 
 		mainActivity.findViewById(R.id.tableFragment).setOnDragListener(this);
+		
+		TableLayout tableLayout = (TableLayout) mainActivity.findViewById(R.id.tableLayout);
+		tableLayout.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				mainActivity.refresh(null);
+			}
+		});
 	}
 
 	private void setPlayerName(int id, PlayerToken token) {
@@ -88,6 +98,8 @@ public class TableFragment extends Fragment implements JassModelObserver,
 	}
 
 	public void updated(Event arg0, PlayerToken arg1, Object arg2) {
+		
+		
 		Match currentMatch = game.getCurrentMatch();
 		Ansage ansage = currentMatch.getAnsage();
 		if (ansage != null) {
