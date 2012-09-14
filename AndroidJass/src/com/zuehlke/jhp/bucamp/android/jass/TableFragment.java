@@ -67,14 +67,7 @@ public class TableFragment extends Fragment implements JassModelObserver,
 		setPlayerName(R.id.player4Name, all.get(3));
 
 		mainActivity.findViewById(R.id.tableFragment).setOnDragListener(this);
-		
-		TableLayout tableLayout = (TableLayout) mainActivity.findViewById(R.id.tableLayout);
-		tableLayout.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View arg0) {
-				mainActivity.refresh(null);
-			}
-		});
+
 	}
 
 	private void setPlayerName(int id, PlayerToken token) {
@@ -96,8 +89,17 @@ public class TableFragment extends Fragment implements JassModelObserver,
 	}
 
 	public void updated(Event arg0, PlayerToken arg1, Object arg2) {
-		
-		
+		TableLayout tableLayout = (TableLayout) mainActivity
+				.findViewById(R.id.tableLayout);
+
+		if (tableLayout != null) {
+			tableLayout.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View arg0) {
+					mainActivity.refresh(null);
+				}
+			});
+		}
 		Match currentMatch = game.getCurrentMatch();
 		Ansage ansage = currentMatch.getAnsage();
 		if (ansage != null) {
