@@ -75,7 +75,9 @@ public class HandFragment extends Fragment implements JassModelObserver {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.hand_fragment, container, false);
+		View v = inflater.inflate(R.layout.hand_fragment, container, false);
+		drawHand(v);
+		return v;
 	}
 
 	@Override
@@ -84,7 +86,7 @@ public class HandFragment extends Fragment implements JassModelObserver {
 		mainActivity.getGame().addObserver(this);
 	}
 
-	private void initCard(Card card, int numberTotal, int index) {
+	private void drawCard(View view, Card card, int numberTotal, int index) {
 		ImageView imageView = new ImageView(mainActivity.getApplicationContext()); // findViewById(id);
 		Match currentMatch = mainActivity.getGame().getCurrentMatch();
 		if (!mainActivity.getGame().getCurrentMatch().isCardPlayable(card) && currentMatch.getAnsage() != null) {
@@ -95,13 +97,13 @@ public class HandFragment extends Fragment implements JassModelObserver {
 		}
 		imageView.setLongClickable(true);
 		imageView.setImageResource(cardImageMap.get(card.getSuit().name() + card.getValue().name()));
-		if (this.getView().getWidth() > 0) {
-			height = this.getView().getHeight()-20;
-			width = this.getView().getWidth();
+		if (view.getWidth() > 0) {
+			height = view.getHeight()-20;
+			width = view.getWidth();
 		}
 		int card_width = (height * 2) / 3;
 		int xpos = ((width-card_width) / numberTotal) * index;
-		LayoutParams params = new RelativeLayout.LayoutParams(card_width, this.getView().getHeight());
+		LayoutParams params = new RelativeLayout.LayoutParams(card_width, height);
 		params.topMargin = 0;
 		params.leftMargin = xpos;
 		layout.addView(imageView, params);
@@ -114,7 +116,11 @@ public class HandFragment extends Fragment implements JassModelObserver {
 	}
 	
 	public void updated(Event event, PlayerToken playerToken, Object object) {
-		layout = (RelativeLayout) this.getView().findViewById(R.id.handFragmentRow1);
+		drawHand(getView());
+	}
+
+	private void drawHand(View view) {
+		layout = (RelativeLayout) view.findViewById(R.id.handFragmentRow1);
 		if (layout != null) {
 			int index = 0;
 			List<Card> cardsInHand = mainActivity.getGame().getCurrentMatch().getCards(
@@ -130,7 +136,7 @@ public class HandFragment extends Fragment implements JassModelObserver {
 			});
 			
 			for (Card card : cardsInHand) {
-				initCard(card, cardsInHand.size(), index);
+				drawCard( view, card, cardsInHand.size(), index);
 				index++;
 			}
 			layout.requestLayout();
