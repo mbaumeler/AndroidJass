@@ -52,8 +52,6 @@ public class TableFragment extends Fragment implements JassModelObserver,
 		super.onActivityCreated(savedInstanceState);
 		mainActivity.getGame().addObserver(this);
 		game = mainActivity.getGame();
-		
-		
 
 		List<PlayerToken> all = game.getPlayerRepository().getAll();
 
@@ -235,7 +233,7 @@ public class TableFragment extends Fragment implements JassModelObserver,
 	public boolean onDrag(View table, DragEvent event) {
 		Drawable enterShape = getResources().getDrawable(
 				R.drawable.shape_droptarget);
-		Drawable normalShape = getResources().getDrawable(R.drawable.shape);
+		Drawable normalShape = getResources().getDrawable(R.drawable.table_texture);
 
 		switch (event.getAction()) {
 		case DragEvent.ACTION_DRAG_STARTED:

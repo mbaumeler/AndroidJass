@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +20,7 @@ import com.zuehlke.jhp.bucamp.android.jass.settings.model.SettingsCreator;
 
 public class MainActivity extends Activity {
 
-	public static final int GAME_FINISHED_DIALOG_ID = 0;
+	private static final String GAME_FINISHED_DIALOG_TAG = "GameFinishedDialogFragment";
 	private static Game game;
 	private ObservableGame observableGame;
 	private GameController gameController;
@@ -40,7 +39,7 @@ public class MainActivity extends Activity {
 
 		gameController = new GameController(observableGame, this, settings);
 		observableGame.addObserver(gameController);
-		
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 	}
@@ -106,21 +105,18 @@ public class MainActivity extends Activity {
 	public void showGameFinishedDialog() {
 		DialogFragment dialogFragment = GameFinishedDialogFragment.newInstance(
 				game, getGameController().getHumanPlayerToken());
-		dialogFragment.show(getFragmentManager(), "dialog");
+		dialogFragment.show(getFragmentManager(), GAME_FINISHED_DIALOG_TAG);
 	}
 
-	public void doPositiveClick() {
-		// Do stuff here.
-		Log.i("FragmentAlertDialog", "Positive click!");
+	public void doNewGameClick() {
 		restartGame();
 	}
 
-	public void doNegativeClick() {
+	public void doGoToSettingsClick() {
 		startActivity(new Intent(this, SetupActivity.class));
 	}
-	
+
 	public void refresh(View view) {
-		
 		observableGame.notifyObservers();
 		gameController.playCard();
 	}
