@@ -28,9 +28,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
 		SharedPreferences sharedPrefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		JassSettings settings = SettingsCreator
@@ -44,6 +41,8 @@ public class MainActivity extends Activity {
 		gameController = new GameController(observableGame, this, settings);
 		observableGame.addObserver(gameController);
 		
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 	}
 
 	@Override
