@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zuehlke.jhp.bucamp.android.jass.audio.Sample;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.drawable.Drawable;
@@ -14,9 +16,11 @@ import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import ch.mbaumeler.jass.core.Game;
@@ -65,6 +69,7 @@ public class TableFragment extends Fragment implements JassModelObserver,
 		setPlayerName(R.id.player4Name, all.get(3));
 
 		mainActivity.findViewById(R.id.tableFragment).setOnDragListener(this);
+
 	}
 
 	private void setPlayerName(int id, PlayerToken token) {
@@ -86,6 +91,17 @@ public class TableFragment extends Fragment implements JassModelObserver,
 	}
 
 	public void updated(Event arg0, PlayerToken arg1, Object arg2) {
+		TableLayout tableLayout = (TableLayout) mainActivity
+				.findViewById(R.id.tableLayout);
+
+		if (tableLayout != null) {
+			tableLayout.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View arg0) {
+					mainActivity.refresh(null);
+				}
+			});
+		}
 		Match currentMatch = game.getCurrentMatch();
 		Ansage ansage = currentMatch.getAnsage();
 		if (ansage != null) {
@@ -258,6 +274,7 @@ public class TableFragment extends Fragment implements JassModelObserver,
 				table.setBackgroundDrawable(normalShape);
 				hasDropped = false;
 			} else {
+				mainActivity.getAudioManager().play(Sample.PLAY_CARD);
 				game.getCurrentMatch().playCard(card);
 				table.setBackgroundDrawable(normalShape);
 				hasDropped = true;

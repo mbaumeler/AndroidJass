@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.content.SharedPreferences;
 import android.os.Handler;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
@@ -18,12 +17,12 @@ import ch.mbaumeler.jass.extended.ui.ObservableGame;
 import ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event;
 
 import com.zuehlke.jhp.bucamp.android.jass.MainActivity;
+import com.zuehlke.jhp.bucamp.android.jass.audio.AudioManager;
+import com.zuehlke.jhp.bucamp.android.jass.audio.Sample;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.JassSettings;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.Player;
-import com.zuehlke.jhp.bucamp.android.jass.settings.model.SettingsCreator;
 
-public class GameController implements JassModelObserver,
-		SharedPreferences.OnSharedPreferenceChangeListener {
+public class GameController implements JassModelObserver {
 
 	private Timer timer = new Timer();
 	private final Handler handler = new Handler();
@@ -32,12 +31,14 @@ public class GameController implements JassModelObserver,
 	private MainActivity mainActivity;
 	private Map<PlayerToken, Player> players = new HashMap<PlayerToken, Player>();
 	private Map<String, JassStrategy> strategies = new HashMap<String, JassStrategy>();
+	private AudioManager audioManager;
 
 	public GameController(ObservableGame game, MainActivity mainActivity,
-			JassSettings settings) {
+			JassSettings settings, AudioManager audioManager) {
 		this.game = game;
 		this.mainActivity = mainActivity;
 		this.settings = settings;
+		this.audioManager = audioManager;
 		initPlayersMap(settings);
 	}
 
@@ -60,7 +61,7 @@ public class GameController implements JassModelObserver,
 			this.mainActivity.showGameFinishedDialog();
 			return;
 		}
-		if (isComputerPlayer(currentMatch) && cardsOnTable != 4) {
+		if (isComputerPlayer(currentMatch) && cardsOnTable != 4 ) {
 			initTimer();
 		}
 
@@ -108,6 +109,8 @@ public class GameController implements JassModelObserver,
 
 			Card cardToPlay = strategy.getCardToPlay(this.game
 					.getCurrentMatch());
+			
+			this.audioManager.play(Sample.PLAY_CARD);
 			this.game.getCurrentMatch().playCard(cardToPlay);
 		}
 	}
@@ -139,13 +142,9 @@ public class GameController implements JassModelObserver,
 	public String getPlayerName(PlayerToken token) {
 		return players.get(token).getName();
 	}
-
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
-		if (key.equals(SettingsCreator.KEY_PLAY_DELAY)) {
-			this.settings.setPlayDelay(sharedPreferences.getLong(key, 0L));
-
-		}
-
+	
+	public void setGameSpeed(long delay) {
+		this.settings.setPlayDelay(delay);
 	}
+
 }
