@@ -10,7 +10,8 @@ public class JassSettings implements Parcelable {
 	private Team team1;
 	private Team team2;
 
-	public JassSettings(long targetPoints, long playDelay, Team team1, Team team2) {
+	public JassSettings(long targetPoints, long playDelay, Team team1,
+			Team team2) {
 		super();
 		this.targetPoints = targetPoints;
 		this.playDelay = playDelay;

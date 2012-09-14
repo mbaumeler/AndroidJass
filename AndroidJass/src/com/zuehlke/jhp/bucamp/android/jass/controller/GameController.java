@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.SharedPreferences;
 import android.os.Handler;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
@@ -19,8 +20,10 @@ import ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event;
 import com.zuehlke.jhp.bucamp.android.jass.MainActivity;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.JassSettings;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.Player;
+import com.zuehlke.jhp.bucamp.android.jass.settings.model.SettingsCreator;
 
-public class GameController implements JassModelObserver {
+public class GameController implements JassModelObserver,
+		SharedPreferences.OnSharedPreferenceChangeListener {
 
 	private Timer timer = new Timer();
 	private final Handler handler = new Handler();
@@ -57,7 +60,7 @@ public class GameController implements JassModelObserver {
 			this.mainActivity.showGameFinishedDialog();
 			return;
 		}
-		if (isComputerPlayer(currentMatch) && cardsOnTable != 4 ) {
+		if (isComputerPlayer(currentMatch) && cardsOnTable != 4) {
 			initTimer();
 		}
 
@@ -137,4 +140,12 @@ public class GameController implements JassModelObserver {
 		return players.get(token).getName();
 	}
 
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+			String key) {
+		if (key.equals(SettingsCreator.KEY_PLAY_DELAY)) {
+			this.settings.setPlayDelay(sharedPreferences.getLong(key, 0L));
+
+		}
+
+	}
 }

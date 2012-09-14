@@ -6,5 +6,9 @@
         android:orderInCategory="1"
         android:showAsAction="always"
         android:title="@string/menu_item_restart"/>
+    <item
+        android:id="@+id/menu_item_game_speed"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_item_game_speed"/>
 
 </menu>
