@@ -37,7 +37,6 @@ public class MainActivity extends Activity {
 		
 		audioManager = new AudioManager();
 		audioManager.init(getApplicationContext());
-		audioManager.repeat(Sample.BACKGROUND_NOISE);
 
 		if (savedInstanceState == null || game == null) {
 			game = new JassEngine().createJassGame();
@@ -49,6 +48,18 @@ public class MainActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		audioManager.stop(Sample.BACKGROUND_NOISE);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		audioManager.repeat(Sample.BACKGROUND_NOISE);
 	}
 
 	@Override

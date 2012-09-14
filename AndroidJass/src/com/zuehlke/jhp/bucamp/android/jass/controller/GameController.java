@@ -3,6 +3,7 @@ package com.zuehlke.jhp.bucamp.android.jass.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -72,6 +73,23 @@ public class GameController implements JassModelObserver {
 	}
 
 	private void initTimer() {
+		
+		Random r = new Random();
+		int percent = r.nextInt(100);
+		if( percent > 95) {
+			new Timer().schedule(new TimerTask() {
+				@Override
+				public void run() {
+					handler.post(new Runnable() {
+						public void run() {
+							audioManager.play(Sample.HMMM);
+						}
+					});
+
+				}
+			}, settings.getPlayDelay());			
+		}
+		
 		this.timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
