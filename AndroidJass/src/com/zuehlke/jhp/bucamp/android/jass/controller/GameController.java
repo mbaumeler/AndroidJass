@@ -17,6 +17,8 @@ import ch.mbaumeler.jass.extended.ui.ObservableGame;
 import ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event;
 
 import com.zuehlke.jhp.bucamp.android.jass.MainActivity;
+import com.zuehlke.jhp.bucamp.android.jass.audio.AudioManager;
+import com.zuehlke.jhp.bucamp.android.jass.audio.Sample;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.JassSettings;
 import com.zuehlke.jhp.bucamp.android.jass.settings.model.Player;
 
@@ -29,12 +31,14 @@ public class GameController implements JassModelObserver {
 	private MainActivity mainActivity;
 	private Map<PlayerToken, Player> players = new HashMap<PlayerToken, Player>();
 	private Map<String, JassStrategy> strategies = new HashMap<String, JassStrategy>();
+	private AudioManager audioManager;
 
 	public GameController(ObservableGame game, MainActivity mainActivity,
-			JassSettings settings) {
+			JassSettings settings, AudioManager audioManager) {
 		this.game = game;
 		this.mainActivity = mainActivity;
 		this.settings = settings;
+		this.audioManager = audioManager;
 		initPlayersMap(settings);
 	}
 
@@ -105,6 +109,8 @@ public class GameController implements JassModelObserver {
 
 			Card cardToPlay = strategy.getCardToPlay(this.game
 					.getCurrentMatch());
+			
+			this.audioManager.play(Sample.PLAY_CARD);
 			this.game.getCurrentMatch().playCard(cardToPlay);
 		}
 	}
