@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+<TableLayout 
     android:id="@+id/tableLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,6 +35,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:text="player3"
+                android:textColor="@color/white"
                 android:gravity="center" />
 
             <ImageView
@@ -67,6 +73,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
+                android:textColor="@color/white"
                 android:text="player4" 
                 android:gravity="center"/>
 
@@ -101,6 +108,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
+                android:textColor="@color/white"
                 android:text="Player2"
                 android:gravity="center" />
 
@@ -140,6 +148,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:text="Player1" 
+                android:textColor="@color/white"
                 android:gravity="center"/>
 
             <ImageView
@@ -160,3 +169,4 @@
              />
     </TableRow>
 </TableLayout>
+</FrameLayout>
