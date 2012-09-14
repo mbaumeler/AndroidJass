@@ -41,7 +41,6 @@ public class MainActivity extends Activity implements
 
 		audioManager = new AudioManager();
 		audioManager.init(getApplicationContext());
-		audioManager.repeat(Sample.BACKGROUND_NOISE);
 
 		if (savedInstanceState == null || game == null) {
 			game = new JassEngine().createJassGame();
@@ -54,6 +53,22 @@ public class MainActivity extends Activity implements
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		audioManager.stop(Sample.BACKGROUND_NOISE);
+		PreferenceManager.getDefaultSharedPreferences(this)
+				.unregisterOnSharedPreferenceChangeListener(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		audioManager.repeat(Sample.BACKGROUND_NOISE);
+		PreferenceManager.getDefaultSharedPreferences(this)
+				.registerOnSharedPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -191,19 +206,4 @@ public class MainActivity extends Activity implements
 
 		}
 	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		PreferenceManager.getDefaultSharedPreferences(this)
-				.unregisterOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		PreferenceManager.getDefaultSharedPreferences(this)
-				.registerOnSharedPreferenceChangeListener(this);
-	}
-
 }
